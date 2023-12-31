@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('kasir.index');
+    return view('gudang.index');
 });
 
 Route::get('/dashboard', function () {
