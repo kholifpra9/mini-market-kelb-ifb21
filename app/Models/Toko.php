@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Toko extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'cabang_toko',
+        'alamat',
+    ];
 }

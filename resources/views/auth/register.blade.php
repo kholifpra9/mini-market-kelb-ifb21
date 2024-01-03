@@ -2,11 +2,18 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
+        
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <div>
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
@@ -37,6 +44,31 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="max-w-xl">
+            <x-input-label for="role" value="Role" />
+            <x-select-input id="role" name="role" class="mt-1 block w-full" required>
+                <option value="">Pilih Role Karyawan</option>
+                <option value="manajer">Manajer</option>
+                <option value="supervisor">Supervisor</option>
+                <option value="kasir">Kasir</option>
+                <option value="pegawai gudang">Pegawai gudang</option>
+            </x-select-input>
+        </div>
+
+        <div class="max-w-xl">
+            <x-input-label for="toko" value="Penempatan Cabang" />
+            <x-select-input id="toko" name="toko_id" class="mt-1 block w-full" required>
+                <option value="">Pilih Cabang Toko</option>
+                @foreach($tokos as $key => $value)
+                @if(old('toko_id') == $key)
+                <option value="{{ $key }}" >{{$value }}</option>
+                @else
+                <option value="{{ $key }}">{{ $value}}</option>
+                @endif
+                @endforeach
+            </x-select-input>
         </div>
 
         <div class="flex items-center justify-end mt-4">
