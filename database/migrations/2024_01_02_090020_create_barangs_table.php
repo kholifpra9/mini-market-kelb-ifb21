@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('barangs', function (Blueprint $table) {
             $table->id();
-            $table-> integer('kode');
-            $table-> string('nama_barang, 60');
-            $table-> string('jenis, 60');
+            $table->integer('kode');
+            $table->string('nama_barang', 60);
+            $table->string('jenis', 60);
             $table->integer('harga');
             $table->integer('gty');
             $table->date('expired');
