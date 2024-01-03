@@ -52,7 +52,10 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::group(['middleware' => ['role:pegawai gudang|owner|manajer'],],function () {
-                Route::get('/gudang', [GudangController::class, 'index'])->name('gudang.index');
+                Route::get('/gudang', [GudangController::class, 'index'])->name('gudang');
+                Route::get('/gudang/create', [GudangController::class, 'create'])->name('barang.create');
+                Route::post('/store', [GudangController::class, 'store'])->name('barang.store');
+                Route::get('/edit', [GudangController::class, 'edit'])->name('barang.edit');
             });
         }
     );

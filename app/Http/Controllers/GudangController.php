@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use Illuminate\Http\Request;
 
 class GudangController extends Controller
@@ -11,7 +12,8 @@ class GudangController extends Controller
      */
     public function index()
     {
-        return view('gudang.index');
+        $data['barangs'] = Barang::with('user')->get();
+        return view('gudang.index', $data);
     }
 
     /**
@@ -19,7 +21,7 @@ class GudangController extends Controller
      */
     public function create()
     {
-        //
+        return view('gudang.create');
     }
 
     /**
@@ -27,7 +29,29 @@ class GudangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'kode' => 'required',
+            'nama_barang' => 'required|max:60',
+            'jenis' => 'required|max:60',
+            'harga' => 'required',
+            'qty' => 'required',
+            'expired' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        Barang::create($validated);
+
+        $notification = array(
+            'message' => 'Data barang berhasil ditambahkan',
+            'alerty-type' => 'succes'
+        );
+
+        if ($request->save == true) {
+            return redirect()->route('gudang')->with($notification);
+        }
+        else{
+            return redirect()->route('barang.create')->with($notification);
+        }
     }
 
     /**

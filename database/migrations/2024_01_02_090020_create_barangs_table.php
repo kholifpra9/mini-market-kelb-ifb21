@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('nama_barang', 60);
             $table->string('jenis', 60);
             $table->integer('harga');
-            $table->integer('gty');
+            $table->integer('qty');
             $table->date('expired');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
