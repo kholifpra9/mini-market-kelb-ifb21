@@ -95,14 +95,17 @@
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">                                        
-                                        @if(session('bayar') === 'false')
-                                            <x-primary-button 
-                                            x-data="" x-on:click.prevent="$dispatch('open-modal', 'transaksi-cetak')"
-                                            class="flex" >Cetak Struk</x-primary-button>
-                                        @else
+                                        @if(session('bayar') == '2')
                                             <x-primary-button class="flex" name="save" value="true">bayar</x-primary-button>
-                                        @endif
                                         </form>
+                                        @elseif(session('bayar') == '1')
+                                        <x-primary-button 
+                                        tag="a" href="{{route('kasir.cetak')}}" target='blank'
+                                        class="flex" >Cetak Struk</x-primary-button>
+                                        @else <x-primary-button 
+                                        tag="a" href="{{route('kasir.index')}}" target='blank'
+                                        class="flex" >Selesai</x-primary-button>
+                                        @endif
                                     </td>
                                 </tr>
                             </tbody>
@@ -118,4 +121,11 @@
 
     @include('kasir.modalPilih');
     @include('kasir.modalCetak');
+
+    <script>
+        document.getElementById('download-link').addEventListener('click', function () {
+        // Setelah pengguna mengklik tautan, arahkan ke halaman baru
+            // window.location.href = "{{ route('kasir.index') }}";
+        });
+    </script>
 </x-app-layout>

@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
                 Route::get('/detailTransaksi', [KasirController::class, 'detailTransaksi'])->name('kasir.detailTransaksi');
                 Route::post('/storeDetailTransaksi', [KasirController::class, 'storeDetailTransaksi'])->name('kasir.storeDetailTransaksi');
                 Route::post('/bayarTransaksi', [KasirController::class, 'bayarTransaksi'])->name('kasir.bayarTransaksi');
+                Route::get('/detailTransaksi/cetak', [KasirController::class, 'cetak'])->name('kasir.cetak');
             }); 
 
             Route::group(['middleware' => ['role:pegawai gudang|owner|manajer'],],function () {

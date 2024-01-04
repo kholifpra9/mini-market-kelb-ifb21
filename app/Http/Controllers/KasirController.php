@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\DetailTransaksi;
 use App\Models\Transaksi;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 
 class KasirController extends Controller
@@ -30,6 +32,8 @@ class KasirController extends Controller
         session(['transaksi_id' => $id]);
         
         if ($request->save == true) {
+            $bayar = '2';
+            session(['bayar' => $bayar]);
             return redirect()->route('kasir.detailTransaksi');
         }
     }
@@ -85,11 +89,23 @@ class KasirController extends Controller
         Transaksi::where('id', $transaksi_id)->update(['kembalian' => $kembalian]);
         $data['transaksis'] = Transaksi::find($transaksi_id)->first();
 
+        $bayar = '1';
+        session(['bayar' => $bayar]);
         if ($request->save == true) {
-            $bayar = 'false';
-            session(['bayar' => $bayar]);
+            
             return redirect()->route('kasir.detailTransaksi', $data);
         }
+
+    }
+
+    public function cetak(){
+        $transaksi_id = session('transaksi_id');
+        $data = DetailTransaksi::where('transaksi_id', $transaksi_id)->with('transaksi.user', 'barang')->first();
+
+        $pdf = FacadePdf::loadview('kasir.cetak', ['detailTransaksi' => $data]);
+        $bayar = '0';
+        session(['bayar' => $bayar]);
+        return $pdf->stream('struk.pdf', ['Attachment' => false]);
 
     }
 
