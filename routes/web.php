@@ -49,7 +49,11 @@ Route::middleware('auth')->group(function () {
 
             Route::group(['middleware' => ['role:kasir|owner'],],function () {
                 Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
-            });
+                Route::post('/storeTransaksi', [KasirController::class, 'storeTransaksi'])->name('kasir.storeTransaksi');
+                Route::get('/detailTransaksi', [KasirController::class, 'detailTransaksi'])->name('kasir.detailTransaksi');
+                Route::post('/storeDetailTransaksi', [KasirController::class, 'storeDetailTransaksi'])->name('kasir.storeDetailTransaksi');
+                Route::post('/bayarTransaksi', [KasirController::class, 'bayarTransaksi'])->name('kasir.bayarTransaksi');
+            }); 
 
             Route::group(['middleware' => ['role:pegawai gudang|owner|manajer'],],function () {
                 Route::get('/gudang', [GudangController::class, 'index'])->name('gudang');
