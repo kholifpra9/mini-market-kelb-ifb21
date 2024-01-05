@@ -100,13 +100,14 @@ class KasirController extends Controller
 
     public function cetak(){
         $transaksi_id = session('transaksi_id');
-        $data = DetailTransaksi::where('transaksi_id', $transaksi_id)->with('transaksi.user', 'barang')->first();
+        $data = DetailTransaksi::where('transaksi_id', $transaksi_id)->with('transaksi.user')->first();
+        $datas = DetailTransaksi::where('transaksi_id', $transaksi_id)->with('barang')->get();
 
-        $pdf = FacadePdf::loadview('kasir.cetak', ['detailTransaksi' => $data]);
-        $bayar = '0';
-        session(['bayar' => $bayar]);
-        return $pdf->stream('struk.pdf', ['Attachment' => false]);
+        $pdf = FacadePdf::loadview('kasir.cetak', ['detailTransaksi' => $data], ['dtbarangs' => $datas]);
+    
+        return $pdf->download('struk.pdf');
 
+        // return redirect()->route('kasir.detailTransaksi');
     }
 
 }

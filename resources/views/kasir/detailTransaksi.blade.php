@@ -99,12 +99,8 @@
                                             <x-primary-button class="flex" name="save" value="true">bayar</x-primary-button>
                                         </form>
                                         @elseif(session('bayar') == '1')
-                                        <x-primary-button 
-                                        tag="a" href="{{route('kasir.cetak')}}" target='blank'
-                                        class="flex" >Cetak Struk</x-primary-button>
-                                        @else <x-primary-button 
-                                        tag="a" href="{{route('kasir.index')}}" target='blank'
-                                        class="flex" >Selesai</x-primary-button>
+                                        <x-primary-button id="cetakButton" tag="a" href="{{route('kasir.cetak')}}" target='blank' class="flex" onclick="handleCetakButtonClick()">Cetak Struk</x-primary-button>
+                                        <x-primary-button id="selesaiButton" tag="a"  target='blank' class="flex"  style="display: none;" onclick="handleSelesai()">Selesai</x-primary-button>
                                         @endif
                                     </td>
                                 </tr>
@@ -123,9 +119,17 @@
     @include('kasir.modalCetak');
 
     <script>
-        document.getElementById('download-link').addEventListener('click', function () {
-        // Setelah pengguna mengklik tautan, arahkan ke halaman baru
-            // window.location.href = "{{ route('kasir.index') }}";
-        });
+        function handleCetakButtonClick() {
+        var cetakButton = document.getElementById("cetakButton");
+        var selesaiButton = document.getElementById("selesaiButton");
+
+        cetakButton.style.display = "none";
+
+        selesaiButton.style.display = "inline-block";
+        
+        }
+        function handleSelesai(){
+            window.location.href = "{{ route('kasir.index') }}";    
+        }
     </script>
 </x-app-layout>
