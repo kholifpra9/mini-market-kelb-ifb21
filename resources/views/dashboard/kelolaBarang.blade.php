@@ -11,10 +11,10 @@
                 <div class="p-6 text-gray-900">
                 @if(Auth::user()->cabang_id == null)
                         @foreach($cabangs as $cabang)
-                            <x-primary-button tag="a" href="{{route('kelola.cetakBarang', $cabang->id)}}" target='blank' class="flex">Cetak data Transaksi {{$cabang->nama_cabang}}</x-primary-button>
+                            <x-primary-button tag="a" href="{{route('kelola.cetakBarang', $cabang->id)}}" target='blank' class="flex">Cetak data Barang {{$cabang->nama_cabang}}</x-primary-button>
                         @endforeach
                     @elseif(Auth::user()->cabang_id != null )
-                        <x-primary-button tag="a" href="{{route('kelola.cetakBarang', $cabanguser)}}" target='blank' class="flex">Cetak data Transaksi {{$cabanguser->nama_cabang}}</x-primary-button>
+                        <x-primary-button tag="a" href="{{route('kelola.cetakBarang', $cabanguser)}}" target='blank' class="flex">Cetak data Barang {{$cabanguser->nama_cabang}}</x-primary-button>
                     @endif
                     <br>
                     <br>
@@ -44,7 +44,6 @@
                             <td>{{$barang->expired}}</td>
                             <td>{{$barang->user->name}}</td>
                             <td>{{$barang->user->cabang->nama_cabang}}</td>
-                          
                         </tr>
                         @endforeach
                     </x-table>

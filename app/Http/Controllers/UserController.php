@@ -49,19 +49,38 @@ class UserController extends Controller
     }
 
     public function kelolaBarang(){
-        $data['cabangs'] = Cabang::all();
-        $cabang_id = Auth::user()->cabang_id;
-        $data['cabanguser'] = Cabang::where('id', $cabang_id)->first();
-        $data['barangs'] = Barang::all();
-        return view('dashboard.kelolaBarang', $data);
+        if (Auth::user()->cabang_id == null) {
+            $data['cabangs'] = Cabang::all();
+            $data['barangs'] = Barang::all();
+            return view('dashboard.kelolaBarang', $data);
+        }
+        else {
+            $data['cabangs'] = Cabang::all();
+            $cabang_id = Auth::user()->cabang_id;
+            $data['cabanguser'] = Cabang::where('id', $cabang_id)->first();
+            $data['barangs'] = Barang::whereHas('user', function ($query) use ($cabang_id) {
+                $query->where('cabang_id', $cabang_id);
+            })->get();
+            return view('dashboard.kelolaBarang', $data);
+        }
+        
     }
 
     public function kelolaTransaksi(){
-        $data['cabangs'] = Cabang::all();
-        $cabang_id = Auth::user()->cabang_id;
-        $data['cabanguser'] = Cabang::where('id', $cabang_id)->first();
-        $data['transaksis'] = Transaksi::all();
-        return view('dashboard.kelolaTransaksi', $data);
+        if (Auth::user()->cabang_id == null) {
+            $data['cabangs'] = Cabang::all();
+            $data['transaksis'] = Transaksi::all();
+            return view('dashboard.kelolaTransaksi', $data);
+        }
+        else {
+            $data['cabangs'] = Cabang::all();
+            $cabang_id = Auth::user()->cabang_id;
+            $data['cabanguser'] = Cabang::where('id', $cabang_id)->first();
+            $data['transaksis']= Transaksi::whereHas('user', function ($query) use ($cabang_id) {
+                $query->where('cabang_id', $cabang_id);
+            })->get();
+            return view('dashboard.kelolaTransaksi', $data);
+        }
     }
 
     public function cetakTransaksi(string $cabId){
