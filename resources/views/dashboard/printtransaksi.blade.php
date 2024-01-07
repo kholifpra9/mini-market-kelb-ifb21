@@ -36,3 +36,15 @@
       </table>
    </body>
 </html>
+
+login semua passwordnya = password
+login pake username : 
+1. owner : ownerToko
+2. manajer : opick (cabang Cikaret)
+3. manajer : emul (cabang pasir kuda)
+4. supervisor : jarot (cabang Cikaret)
+5. supervisor : buceng (cabang pasir kuda)
+6. kasir : diego (cabang Cikaret)
+7. kasir : dora (cabang pasir kuda)
+8. pegawai gudang : zoro (cabang Cikaret)
+9. pegawai gudang : usop (cabang pasir kuda)

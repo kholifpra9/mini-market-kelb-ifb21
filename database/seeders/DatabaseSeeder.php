@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\DetailTransaksi;
+use App\Models\Transaksi;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +30,9 @@ class DatabaseSeeder extends Seeder
                 SupervisorSeeder::class,
                 KasirSeeder::class,
                 PegawaiGudangSeeder::class,
+                BarangSeeder::class,
+                TransaksiSeeder::class,
+                DetailTransaksiSeeder::class,
             ]
         );
     }
