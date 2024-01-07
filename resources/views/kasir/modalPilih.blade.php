@@ -1,4 +1,4 @@
-<x-modal name="pilih-produk" focusable maxWidth="xl">
+<x-modal name="pilih-produk" focusable maxWidth="2xl">
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto">
             <div class="p-1.5 min-w-full inline-block align-middle">
@@ -21,6 +21,7 @@
                         <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">kode</th>
                         <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Nama Barang</th>
                         <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">QTY Barang</th>
+                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Harga</th>
                         <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">QTY Pembelian</th>
                         <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action</th>
                     </tr>
@@ -31,12 +32,13 @@
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">{{$barang->kode}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">{{$barang->nama_barang}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{$barang->qty}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{$barang->harga}}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                             <form method="post" action="{{ route('kasir.storeDetailTransaksi') }}" enctype="multipart/form-data">
                                 @csrf
                                 <x-text-input type="hidden" name="transaksi_id" class="mt-1 block w-full" value="{{session('transaksi_id')}}" required />
                                 <x-text-input type="hidden" name="barang_id" class="mt-1 block w-full" value="{{$barang->id}}" required />
-                                <x-text-input type="number" name="qty" class="mt-1 block w-full" value="{{'old(qty)'}}" required />
+                                <x-text-input type="number" name="qty" class="mt-1 block w-full" value="1" required />
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
                                 <x-text-input type="hidden" name="jumlah" class="mt-1 block w-full" value="0" required />

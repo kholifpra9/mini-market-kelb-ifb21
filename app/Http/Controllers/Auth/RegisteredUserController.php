@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Toko;
+use App\Models\Cabang;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $data['tokos'] = Toko::pluck('cabang_toko', 'id');
+        $data['cabangs'] = Cabang::pluck('nama_cabang', 'id');
         return view('auth.register', $data);
     }
 
@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'toko_id' => ['required'],
+            'cabang_id' => ['required'],
             'role' => ['required'],
         ]);
 
@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'toko_id' => $request->toko_id,
+            'cabang_id' => $request->cabang_id,
             'role' => $request->role,
         ]);
 

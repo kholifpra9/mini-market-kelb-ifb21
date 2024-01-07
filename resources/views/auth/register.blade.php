@@ -59,10 +59,10 @@
 
         <div class="max-w-xl">
             <x-input-label for="toko" value="Penempatan Cabang" />
-            <x-select-input id="toko" name="toko_id" class="mt-1 block w-full" required>
+            <x-select-input id="toko" name="cabang_id" class="mt-1 block w-full" required>
                 <option value="">Pilih Cabang Toko</option>
-                @foreach($tokos as $key => $value)
-                @if(old('toko_id') == $key)
+                @foreach($cabangs as $key => $value)
+                @if(old('cabang_id') == $key)
                 <option value="{{ $key }}" >{{$value }}</option>
                 @else
                 <option value="{{ $key }}">{{ $value}}</option>

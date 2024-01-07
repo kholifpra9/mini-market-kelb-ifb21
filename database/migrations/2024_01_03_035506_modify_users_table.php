@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('username')->after('name');
-            $table->foreignId('toko_id')->nullable()->constrained()
+            $table->foreignId('cabang_id')->nullable()->constrained()
             ->onUpdate('cascade')->onDelete('cascade')->after('password');
             $table->enum('role', ['owner', 'manajer', 'supervisor', 'kasir', 'pegawai gudang'])
-            ->after('toko_id');
+            ->after('cabang_id');
         });
     }
 
@@ -27,7 +27,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('username');
-            $table->dropColumn('toko_id');
+            $table->dropColumn('cabang_id');
             $table->dropColumn('role');
         });
     }

@@ -22,7 +22,7 @@ class OwnerSeeder extends Seeder
             'password' => Hash::make('password'),
             'created_at' => now(),
             'updated_at' => now(),
-            'toko_id' => null,
+            'cabang_id' => null,
             'role' => 'owner',
         ]);
         $user->assignRole('owner');

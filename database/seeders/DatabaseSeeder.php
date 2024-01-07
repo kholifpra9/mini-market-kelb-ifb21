@@ -22,7 +22,11 @@ class DatabaseSeeder extends Seeder
             [
                 RoleSeeder::class,
                 OwnerSeeder::class,
-                TokoSeeder::class,
+                CabangSeeder::class,
+                ManajerSeeder::class,
+                SupervisorSeeder::class,
+                KasirSeeder::class,
+                PegawaiGudangSeeder::class,
             ]
         );
     }
