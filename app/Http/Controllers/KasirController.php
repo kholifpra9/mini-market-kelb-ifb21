@@ -8,12 +8,27 @@ use App\Models\Transaksi;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KasirController extends Controller
 {
     public function index()
     {
-        return view('kasir.index');
+        $user_id = Auth::user()->id;
+        $cabang_id = Auth::user()->cabang_id;
+        $data['barangs'] = Barang::whereHas('user', function ($query) use ($cabang_id) {
+            $query->where('cabang_id', $cabang_id);
+        })->get();
+
+        $transaksi_id = session('transaksi_id');
+        $data['details'] = DetailTransaksi::where('transaksi_id', $transaksi_id)->get();
+        $data['transaksis'] = Transaksi::where('id', $transaksi_id)->first();
+        return view('kasir.index', $data);
+        // $data['barangs'] = Barang::all();
+        // $transaksi_id = session('transaksi_id');
+        // $data['details'] = DetailTransaksi::where('transaksi_id', $transaksi_id)->get();
+        // $data['transaksis'] = Transaksi::where('id', $transaksi_id)->first();
+        // return view('kasir.index', $data);
     }
 
     public function storeTransaksi(Request $request){
@@ -34,7 +49,7 @@ class KasirController extends Controller
         if ($request->save == true) {
             $bayar = '2';
             session(['bayar' => $bayar]);
-            return redirect()->route('kasir.detailTransaksi');
+            return redirect()->route('kasir');
         }
     }
 
@@ -43,7 +58,7 @@ class KasirController extends Controller
         $transaksi_id = session('transaksi_id');
         $data['details'] = DetailTransaksi::where('transaksi_id', $transaksi_id)->get();
         $data['transaksis'] = Transaksi::where('id', $transaksi_id)->first();
-        return view('kasir.detailTransaksi', $data);
+        return view('kasir', $data);
     }
 
     public function storeDetailTransaksi(Request $request){
@@ -70,7 +85,7 @@ class KasirController extends Controller
         Barang::where('id', $barang_id)->update(['qty' => $kurangi_qty]);
 
         if ($request->save == true) {
-            return redirect()->route('kasir.detailTransaksi', [$total_harga, ]);
+            return redirect()->route('kasir', [$total_harga, ]);
         }
 
     }
@@ -93,7 +108,7 @@ class KasirController extends Controller
         session(['bayar' => $bayar]);
         if ($request->save == true) {
             
-            return redirect()->route('kasir.detailTransaksi', $data);
+            return redirect()->route('kasir', $data);
         }
 
     }
@@ -103,11 +118,46 @@ class KasirController extends Controller
         $data = DetailTransaksi::where('transaksi_id', $transaksi_id)->with('transaksi.user')->first();
         $datas = DetailTransaksi::where('transaksi_id', $transaksi_id)->with('barang')->get();
 
+        $namaFile = 'Struk_'.$transaksi_id.'.pdf';
+
         $pdf = FacadePdf::loadview('kasir.cetak', ['detailTransaksi' => $data], ['dtbarangs' => $datas]);
     
-        return $pdf->download('struk.pdf');
+        return $pdf->download($namaFile);
 
-        // return redirect()->route('kasir.detailTransaksi');
+        // return redirect()->route('kasir');
     }
 
+    public function selesai(Request $request){
+        if ($request->selesai == true) {
+            $request->session()->forget(['transaksi_id', 'bayar']);
+            return redirect()->route('kasir');
+        }
+    }
+
+    public function destroyPilihan(string $id){
+        $detail_id = $id;
+        $transaksi_id = session('transaksi_id');
+
+        $qtytransaksi = DetailTransaksi::where('id', $detail_id)->pluck('qty')->first();
+        $barang_id = DetailTransaksi::where('id', $detail_id)->pluck('barang_id')->first();
+        $barang_qty = Barang::where('id', $barang_id)->pluck('qty')->first();
+        $tambahqty = $barang_qty + $qtytransaksi;
+        Barang::where('id', $barang_id)->update(['qty' => $tambahqty]);
+
+        $jumlah = DetailTransaksi::where('id', $detail_id)->pluck('jumlah')->first();
+        $total_bayar = Transaksi::where('id', $transaksi_id)->pluck('total_bayar')->first();
+        $total = $total_bayar - $jumlah;
+        Transaksi::where('id', $transaksi_id)->update(['total_bayar' => $total]);
+
+        $detail = DetailTransaksi::findOrFail($id);
+
+        $detail->delete();
+
+        $notification = array(
+            'message' => 'Data Buku berhasil dihapus',
+            'alerty-type' => 'succes'
+        );
+
+        return redirect()->route('kasir')->with($notification);
+    }
 }

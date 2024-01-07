@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GudangController extends Controller
 {
@@ -12,7 +13,11 @@ class GudangController extends Controller
      */
     public function index()
     {
-        $data['barangs'] = Barang::with('user')->get();
+        $user_id = Auth::user()->id;
+        $cabang_id = Auth::user()->cabang_id;
+        $data['barangs'] = Barang::whereHas('user', function ($query) use ($cabang_id) {
+            $query->where('cabang_id', $cabang_id);
+        })->get();
         return view('gudang.index', $data);
     }
 
@@ -54,24 +59,52 @@ class GudangController extends Controller
         }
     }
 
-    public function edit(string $id)
-    {
-        //
+    public function edit(string $id){
+        $data['barang'] = Barang::findOrFail($id);
+
+        return view('gudang.edit')->with($data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(Request $request, string $id){
+        $barang = Barang::findOrFail($id);
+
+        $validated = $request->validate([
+            'kode' => 'required',
+            'nama_barang' => 'required|max:60',
+            'jenis' => 'required|max:60',
+            'harga' => 'required',
+            'qty' => 'required',
+            'expired' => 'required',
+        ]);
+
+
+        Barang::where('id', $id)->update([
+            'kode' => $validated['kode'],
+            'nama_barang' => $validated['nama_barang'],
+            'jenis' => $validated['jenis'],
+            'harga' => $validated['harga'],
+            'qty' => $validated['qty'],
+            'expired' => $validated['expired'],
+        ]);
+
+        $notification = array(
+            'message' => 'Data Buku berhasil diperbaharui',
+            'alerty-type' => 'succes'
+        );
+
+        return redirect()->route('gudang')->with($notification);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(string $id){
+        $barang = Barang::findOrFail($id);
+
+        $barang->delete();
+
+        $notification = array(
+            'message' => 'Data Buku berhasil dihapus',
+            'alerty-type' => 'succes'
+        );
+
+        return redirect()->route('gudang')->with($notification);
     }
 }

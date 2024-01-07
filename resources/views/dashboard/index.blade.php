@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="py-12">
-        <div class="max-w-7xl ml-64 sm:px-6 lg:px-8">
+        <div class="max-w-7xl ml-40 sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                 <div class="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8">
-                <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                <div class=" items-center bg-white border rounded-sm overflow-hidden shadow">
                     <div class="p-4 bg-green-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -12,11 +12,11 @@
                             </path>
                         </svg></div>
                     <div class="px-4 text-gray-700">
-                        <h3 class="text-sm tracking-wider">Total Member</h3>
-                        <p class="text-3xl">12,768</p>
+                        <h3 class="text-sm tracking-wider">Total Karyawan</h3>
+                        <p class="text-3xl">{{$totalkaryawan}}</p>
                     </div>
                 </div>
-                <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                <div class=" items-center bg-white border rounded-sm overflow-hidden shadow">
                     <div class="p-4 bg-blue-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -24,11 +24,11 @@
                             </path>
                         </svg></div>
                     <div class="px-4 text-gray-700">
-                        <h3 class="text-sm tracking-wider">Total Post</h3>
-                        <p class="text-3xl">39,265</p>
+                        <h3 class="text-sm tracking-wider">Total Penjualan</h3>
+                        <p class="text-3xl">Rp.{{$totpenjualan}}</p>
                     </div>
                 </div>
-                <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                <div class=" items-center bg-white border rounded-sm overflow-hidden shadow">
                     <div class="p-4 bg-indigo-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -36,11 +36,11 @@
                             </path>
                         </svg></div>
                     <div class="px-4 text-gray-700">
-                        <h3 class="text-sm tracking-wider">Total Comment</h3>
-                        <p class="text-3xl">142,334</p>
+                        <h3 class="text-sm tracking-wider">Total Pembeli </h3>
+                        <p class="text-3xl">{{$totpembeli}}</p>
                     </div>
                 </div>
-                <div class="flex items-center bg-white border rounded-sm overflow-hidden shadow">
+                <div class=" items-center bg-white border rounded-sm overflow-hidden shadow">
                     <div class="p-4 bg-red-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -48,8 +48,8 @@
                             </path>
                         </svg></div>
                     <div class="px-4 text-gray-700">
-                        <h3 class="text-sm tracking-wider">Server Load</h3>
-                        <p class="text-3xl">34.12%</p>
+                        <h3 class="text-sm tracking-wider">cabang Teramai</h3>
+                        <p class="text-3xl">{{$cabangramai}}</p>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaksi;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -11,7 +15,26 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('owner.index');
+        if(Auth::user()->role == 'kasir'){
+            return redirect()->route('kasir');
+        }
+        elseif (Auth::user()->role == 'pegawai gudang') {
+            return redirect()->route('gudang');
+        }
+        else{
+            $mostFrequentCabang = Transaksi::join('users', 'transaksis.user_id', '=', 'users.id')
+                ->join('cabangs', 'users.cabang_id', '=', 'cabangs.id')
+                ->select('cabangs.nama_cabang', DB::raw('COUNT(*) as total_transaksi'))
+                ->groupBy('cabangs.nama_cabang')
+                ->orderByDesc('total_transaksi')
+                ->first();
+
+            $data['cabangramai'] = $mostFrequentCabang->nama_cabang;
+            $data['totalkaryawan']= User::whereNotNull('cabang_id')->count();
+            $data['totpenjualan'] = Transaksi::sum('total_bayar');
+            $data['totpembeli'] = Transaksi::count();
+            return view('dashboard.index')->with($data);
+        }
     }
 
     public function transaksiKasir(){

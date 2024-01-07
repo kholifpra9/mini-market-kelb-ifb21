@@ -23,10 +23,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard.index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 // Route::group(['middleware' => ['role:owner|kasir']], function () {
@@ -51,6 +52,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/storeDetailTransaksi', [KasirController::class, 'storeDetailTransaksi'])->name('kasir.storeDetailTransaksi');
         Route::post('/bayarTransaksi', [KasirController::class, 'bayarTransaksi'])->name('kasir.bayarTransaksi');
         Route::get('/detailTransaksi/cetak', [KasirController::class, 'cetak'])->name('kasir.cetak');
+        Route::post('/selesai', [KasirController::class, 'selesai'])->name('kasir.selesaiTransaksi');
+        Route::delete('/detailTransaksi/{id}', [KasirController::class, 'destroyPilihan'])->name('kasir.destroyPilihan');
     });
 
     Route::group(['middleware' => ['role:pegawai gudang|manajer'],],function () {
@@ -58,6 +61,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/gudang/create', [GudangController::class, 'create'])->name('barang.create');
         Route::post('/store', [GudangController::class, 'store'])->name('barang.store');
         Route::get('/edit', [GudangController::class, 'edit'])->name('barang.edit');
+        Route::get('/gudang/{id}/edit', [GudangController::class, 'edit'])->name('barang.edit');
+        Route::match(['put', 'patch'], '/gudang/{id}', [GudangController::class, 'update'])->name('barang.update');
+        Route::delete('/barang/{id}', [GudangController::class, 'destroy'])->name('barang.destroy');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
