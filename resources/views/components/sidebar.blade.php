@@ -29,6 +29,26 @@
         </div>
       </li>
     @endhasrole
+    @hasrole('owner|manajer|supervisor')
+      <li class="hs-accordion" id="users-accordion">
+        <div class="hidden space-x-8 sm:-my-px sm:flex">
+            <x-nav-link :href="route('kelola.transaksi')" :active="request()->routeIs('kelola.transaksi')">
+            <svg fill="#000000" width="24px" height="24px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M668.6 320c0-4.4-3.6-8-8-8h-54.5c-3 0-5.8 1.7-7.1 4.4l-84.7 168.8H511l-84.7-168.8a8 8 0 0 0-7.1-4.4h-55.7c-1.3 0-2.6.3-3.8 1-3.9 2.1-5.3 7-3.2 10.8l103.9 191.6h-57c-4.4 0-8 3.6-8 8v27.1c0 4.4 3.6 8 8 8h76v39h-76c-4.4 0-8 3.6-8 8v27.1c0 4.4 3.6 8 8 8h76V704c0 4.4 3.6 8 8 8h49.9c4.4 0 8-3.6 8-8v-63.5h76.3c4.4 0 8-3.6 8-8v-27.1c0-4.4-3.6-8-8-8h-76.3v-39h76.3c4.4 0 8-3.6 8-8v-27.1c0-4.4-3.6-8-8-8H564l103.7-191.6c.5-1.1.9-2.4.9-3.7zM157.9 504.2a352.7 352.7 0 0 1 103.5-242.4c32.5-32.5 70.3-58.1 112.4-75.9 43.6-18.4 89.9-27.8 137.6-27.8 47.8 0 94.1 9.3 137.6 27.8 42.1 17.8 79.9 43.4 112.4 75.9 10 10 19.3 20.5 27.9 31.4l-50 39.1a8 8 0 0 0 3 14.1l156.8 38.3c5 1.2 9.9-2.6 9.9-7.7l.8-161.5c0-6.7-7.7-10.5-12.9-6.3l-47.8 37.4C770.7 146.3 648.6 82 511.5 82 277 82 86.3 270.1 82 503.8a8 8 0 0 0 8 8.2h60c4.3 0 7.8-3.5 7.9-7.8zM934 512h-60c-4.3 0-7.9 3.5-8 7.8a352.7 352.7 0 0 1-103.5 242.4 352.57 352.57 0 0 1-112.4 75.9c-43.6 18.4-89.9 27.8-137.6 27.8s-94.1-9.3-137.6-27.8a352.57 352.57 0 0 1-112.4-75.9c-10-10-19.3-20.5-27.9-31.4l49.9-39.1a8 8 0 0 0-3-14.1l-156.8-38.3c-5-1.2-9.9 2.6-9.9 7.7l-.8 161.7c0 6.7 7.7 10.5 12.9 6.3l47.8-37.4C253.3 877.7 375.4 942 512.5 942 747 942 937.7 753.9 942 520.2a8 8 0 0 0-8-8.2z"></path> </g></svg>
+                {{ __('Kelola Transaksi') }}
+            </x-nav-link>
+        </div>
+      </li>
+    @endhasrole
+    @hasrole('owner|manajer')
+      <li class="hs-accordion" id="users-accordion">
+        <div class="hidden space-x-8 sm:-my-px sm:flex">
+            <x-nav-link :href="route('kelola.barang')" :active="request()->routeIs('kelola.barang')">
+            <svg fill="#000000" width="24px" height="24px" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M758 107q-12-4-148-10-129-5-227-5-43 0-83 16t-71 47q-45 45-82 107-9 13-2 26 4 8 12 15l144 113-154 80q-12 6-18 15-8 14-5 38 9 56 39 275 2 19 15 32 18 20 53 23l388 28q20 3 40-2 16-4 31-12 11-6 20-14l115-109q20-21 28-40 5-14 7-40 2-47 6-156l3-101q24-174-29-261-28-45-78-63zM529 638l-58 46-6 2q-6 3-11 0l-33 22 76 46q10 6 10 17t-9.5 16.5-19.5.5l-79-42-2 41h12q7 0 11 4t4 10-4 10.5-11 4.5h-12v18q0 8-6 14t-14 6-13.5-6-5.5-14v-18h-14q-6 0-10.5-4.5T329 801t4.5-10 10.5-4h14l-2-41-79 42q-7 4-14.5 2t-11.5-9-2-15 9-12l76-47-42-26-8 22-73-49 45-37q9-7 18.5-9.5t17.5 3 10 12.5-1 18l55 29 2-90q0-8 5.5-13.5t14-5.5 14 5.5T397 580l2 90 35-18q1-5 6-10l5-3 69-27q15-6 24-1 3 2 3 6 1 11-12 21zm133-110l-490-18 163-83 470 13z"></path></g></svg>
+                {{ __('Kelola Barang') }}
+            </x-nav-link>
+        </div>
+      </li>
+    @endhasrole
       @hasrole('kasir|manajer|supervisor')
       <li class="hs-accordion" id="users-accordion">
         <div class="hidden space-x-8 sm:-my-px  sm:flex">

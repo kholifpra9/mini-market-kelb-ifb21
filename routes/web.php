@@ -42,6 +42,10 @@ Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth', 
 Route::middleware('auth')->group(function () {
 
     Route::group(['middleware' => ['role:owner|manajer|supervisor'],],function () {
+        Route::get('/kelola-barang', [UserController::class, 'kelolaBarang'])->name('kelola.barang');
+        Route::get('/kelola-transaksi', [UserController::class, 'KelolaTransaksi'])->name('kelola.transaksi');
+        Route::get('/cetak-transaksi/{cabId}', [UserController::class, 'cetakTransaksi'])->name('kelola.cetakTransaksi');
+        Route::get('/cetak-barang/{cabId}', [UserController::class, 'cetakBarang'])->name('kelola.cetakBarang');
       
     });
     
